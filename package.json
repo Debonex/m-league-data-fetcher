@@ -1,0 +1,26 @@
+{
+  "name": "m-league-data-fetcher",
+  "version": "1.0.0",
+  "description": "fetch information about m-league",
+  "scripts": {
+    "start": "tsc && node ./dist/main.js"
+  },
+  "keywords": [
+    "m-league",
+    "node.js"
+  ],
+  "author": "Debonex <debonexx@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
+    "node-html-parser": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
+    "eslint": "^8.13.0",
+    "typescript": "^4.6.3"
+  }
+}
