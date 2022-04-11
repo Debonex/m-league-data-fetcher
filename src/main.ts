@@ -1,11 +1,11 @@
 import axios from "axios";
 import { parse } from "node-html-parser";
 import sleep from "./utils/sleep";
-import { writeFile } from "fs";
+import { writeFile, mkdirSync, existsSync } from "fs";
 import path from "path";
 import { config } from "dotenv";
 
-const paifuSessionId = config().parsed?.cookie;
+const paifuSessionId = config().parsed?.paifuSessionId;
 if (!paifuSessionId) {
   throw "Please enter your paifuSessionId in .env file, for more information, please check README.md.";
 }
@@ -17,6 +17,7 @@ const SEASON_LIST = [
   // current season (2021)
   "games",
 ];
+const TARGET_DIRECTORY = path.resolve("./data");
 const BASE_URL = "https://m-league.jp";
 const GAME_URL = "https://viewer.ml-log.jp/web/viewer";
 const GAME_DATA_REG = /UMP_PLAYER\.init\(true, true, '(.+)', autoplay\);/;
@@ -26,6 +27,11 @@ const REQUEST_GAP = 500; // The frequency of requests is about REQUEST_GAP/SEASO
 const req = axios.create({
   timeout: 30000,
 });
+
+// create directory for data storage
+if (!existsSync(TARGET_DIRECTORY)) {
+  mkdirSync(TARGET_DIRECTORY);
+}
 
 // multiple seasons in parallel requests, for one season, every match(半荘) is in sequence
 for (const season of SEASON_LIST) {
@@ -47,7 +53,7 @@ for (const season of SEASON_LIST) {
         const regMatches = gameInfo.data.match(GAME_DATA_REG);
         if (regMatches) {
           writeFile(
-            path.resolve(__dirname, `../data/${gameId}.json`),
+            path.resolve(TARGET_DIRECTORY, `${gameId}.json`),
             regMatches[1],
             { encoding: "utf-8" },
             () => {
