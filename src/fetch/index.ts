@@ -1,6 +1,6 @@
 import axios from "axios";
 import { parse } from "node-html-parser";
-import sleep from "./utils/sleep";
+import sleep from "../utils/sleep";
 import { writeFile, mkdirSync, existsSync } from "fs";
 import path from "path";
 import { config } from "dotenv";

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "fetch information about m-league",
   "scripts": {
-    "start": "tsc && node ./dist/main.js"
+    "fetch": "tsc && node ./dist/fetch/index.js",
+    "store": "tsc && node ./dist/store/index.js"
   },
   "keywords": [
     "m-league",
@@ -12,7 +13,9 @@
   "author": "Debonex <debonexx@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/better-sqlite3": "^7.5.0",
     "axios": "^0.26.1",
+    "better-sqlite3": "^7.5.1",
     "dotenv": "^16.0.0",
     "node-html-parser": "^5.3.3"
   },

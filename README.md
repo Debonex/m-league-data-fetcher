@@ -1,8 +1,10 @@
 ## About
 
-Fetch m-league paifu information.
+Fetch and store m-league haifu(牌譜) information.
 
 ## Usage
+
+### fetch haifu information
 
 - sign in [https://m-league.jp/](https://m-league.jp/)
 
@@ -23,6 +25,8 @@ or
 yarn
 yarn start
 ```
+
+### store haifu information to database
 
 ## Other
 
