@@ -3,6 +3,8 @@ interface Game {
   east: string;
   bon: number;
   richibo: number;
+  dora: Pai[];
+  doraPointer: Pai[];
 }
 
 interface Player {
@@ -10,7 +12,7 @@ interface Player {
   code: string;
   point: number;
   status: "menzen" | "furo" | "richi";
-  tenpai: boolean;
+  tenpai: Pai[];
   sute: Pai[];
   tehai: Pai[];
   renchan: number;
@@ -36,8 +38,8 @@ interface SeasonPro {
   game_south_start_num: number;
   game_west_start_num: number;
   game_north_start_num: number;
-  game_highest_score: number;
-  game_lowest_score: number;
+  game_highest_score: number | null;
+  game_lowest_score: number | null;
   first_east_num: number;
   first_south_num: number;
   first_west_num: number;
@@ -50,6 +52,10 @@ interface SeasonPro {
   third_south_num: number;
   third_west_num: number;
   third_north_num: number;
+  fourth_east_num: number;
+  fourth_south_num: number;
+  fourth_west_num: number;
+  fourth_north_num: number;
   score_point: number;
   rank_point: number;
   kyoku_east_num: number;

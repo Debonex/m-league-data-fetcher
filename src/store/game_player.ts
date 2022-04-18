@@ -27,7 +27,7 @@ export const resolvePlayer = (
     code: code,
     point: 0,
     status: "menzen",
-    tenpai: false,
+    tenpai: [],
     sute: [],
     tehai: [],
     renchan: 0,

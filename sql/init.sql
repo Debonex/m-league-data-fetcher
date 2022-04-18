@@ -1,5 +1,5 @@
 /*
- Navicat SQLite Data Transfer
+ Navicat Premium Data Transfer
 
  Source Server         : mleague-local
  Source Server Type    : SQLite
@@ -10,7 +10,7 @@
  Target Server Version : 3035005
  File Encoding         : 65001
 
- Date: 16/04/2022 15:31:28
+ Date: 18/04/2022 12:56:08
 */
 
 PRAGMA foreign_keys = false;
@@ -107,8 +107,8 @@ CREATE TABLE "season_pro" (
   "game_south_start_num" integer NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "game_west_start_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "game_north_start_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
-  "game_highest_score" integer NOT NULL ON CONFLICT REPLACE DEFAULT 0,
-  "game_lowest_score" integer NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+  "game_highest_score" integer DEFAULT NULL,
+  "game_lowest_score" integer DEFAULT NULL,
   "first_east_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "first_south_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "first_west_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
@@ -121,6 +121,10 @@ CREATE TABLE "season_pro" (
   "third_south_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "third_west_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "third_north_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+  "fourth_east_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+  "fourth_south_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+  "fourth_west_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+  "fourth_north_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "score_point" real NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "rank_point" real NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "kyoku_east_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
@@ -235,6 +239,7 @@ CREATE TABLE "sqlite_sequence" (
 -- ----------------------------
 -- Records of sqlite_sequence
 -- ----------------------------
+INSERT INTO "sqlite_sequence" VALUES ('season_year', 4);
 INSERT INTO "sqlite_sequence" VALUES ('season_year', 4);
 
 -- ----------------------------
