@@ -18,7 +18,7 @@ export const resolvePlayer = (
   game: Game,
   seasonProMap: Record<string, SeasonPro>
 ) => {
-  const code = item.args[0];
+  const code = item.args[0] as Code;
   const proName = item.args[1].replace(" ", "");
   const teamCode = item.args[3];
   // init game players

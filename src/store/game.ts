@@ -12,7 +12,7 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
     players: [],
     bon: 0,
     richibo: 0,
-    east: "",
+    east: "A0",
     dora: [],
     doraPointer: [],
   };
@@ -44,24 +44,36 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
  */
 const resolveGameEnd = (
   gameEnd: UMDGameItem,
-  seasonProMap: Record<string, SeasonPro>
+  seasonProMap: Record<Code, SeasonPro>
 ) => {
   const rankPoints = [50, 10, -10, -30];
   const winds = { A0: "east", B0: "south", C0: "west", D0: "north" };
   const ranks = ["first", "second", "third", "fourth"];
 
+  const pointMap: Partial<Record<Code, number>> = {};
+
   for (let i = 0; i < 4; i++) {
-    const code = gameEnd.args[i * 2] as keyof typeof winds;
+    const code = gameEnd.args[i * 2] as Code;
     const point = Number(gameEnd.args[i * 2 + 1]);
-    const rankPoint = rankPoints[i];
-    const scorePoint = Number((point - rankPoints[i]).toFixed(1));
+    pointMap[code] = point;
+  }
+
+  for (let i = 8; i < 12; i++) {
+    const arg = gameEnd.args[i];
+    const code = arg.slice(0, 2) as Code;
+    // 0,1,2,3
+    const rank = Number(arg.slice(-1));
+    const point = pointMap[code] as number;
     const seasonPro = seasonProMap[code];
+
     // point
+    const rankPoint = rankPoints[rank];
+    const scorePoint = Number((point - rankPoints[rank]).toFixed(1));
     seasonPro.rank_point += rankPoint;
     seasonPro.score_point += scorePoint;
 
     // rank
-    const key = `${ranks[i]}_${winds[code]}_num` as keyof SeasonPro;
+    const key = `${ranks[rank]}_${winds[code]}_num` as keyof SeasonPro;
     seasonPro[key]++;
 
     // score

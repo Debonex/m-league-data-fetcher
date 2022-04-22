@@ -9,11 +9,11 @@ import { resolvePoint } from "./game_point";
 export const resolveKyokuStart = (
   items: UMDGameItem[],
   game: Game,
-  seasonProMap: Record<string, SeasonPro>
+  seasonProMap: Record<Code, SeasonPro>
 ) => {
   // resolve kyoku start
   const kyokuStart = items[0];
-  const winds = ["A0", "B0", "C0", "D0"];
+  const winds: Code[] = ["A0", "B0", "C0", "D0"];
   // renchan count
   game.players.forEach((player) => {
     // east
@@ -34,7 +34,7 @@ export const resolveKyokuStart = (
     }
   });
   // initial kyoku
-  game.east = kyokuStart.args[1];
+  game.east = kyokuStart.args[1] as Code;
   game.bon = Number(kyokuStart.args[2]);
   game.richibo = Number(kyokuStart.args[3]);
   game.players.forEach((player) => {

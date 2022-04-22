@@ -1,6 +1,6 @@
 interface Game {
   players: Player[];
-  east: string;
+  east: Code;
   bon: number;
   richibo: number;
   dora: Pai[];
@@ -9,7 +9,7 @@ interface Game {
 
 interface Player {
   name: string;
-  code: string;
+  code: Code;
   point: number;
   status: "menzen" | "furo" | "richi";
   tenpai: Pai[];

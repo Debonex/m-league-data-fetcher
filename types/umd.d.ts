@@ -5,6 +5,8 @@ interface UMDGameItem {
   args: string[];
 }
 
+type Code = "A0" | "B0" | "C0" | "D0";
+
 type UMDCmd =
   | "area"
   | "player"
