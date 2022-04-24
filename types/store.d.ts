@@ -11,7 +11,7 @@ interface Player {
   name: string;
   code: Code;
   point: number;
-  status: "menzen" | "furo" | "richi";
+  status: "menzen" | "furo" | "richi" | "richi_chased";
   tenpai: Pai[];
   sute: Pai[];
   tehai: Pai[];

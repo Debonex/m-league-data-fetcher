@@ -1,6 +1,7 @@
 import { getSeasonIdBySeasonCode } from "./database";
 import { resolveKyokuStart } from "./game_kyoku";
 import { resolvePlayer } from "./game_player";
+import { resolveRichi } from "./game_richi";
 
 /**
  * resolve game cmd list and store resolved game info into database
@@ -19,22 +20,62 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
   const seasonProMap: Record<string, SeasonPro> = {};
   const seasonId = getSeasonIdBySeasonCode(seasonCode) as number;
 
-  for (let i = 0; i < umdGame.length; ) {
+  for (let i = 0; i < umdGame.length; i++) {
     const item = umdGame[i];
+    // player
     if (item.cmd === "player") {
       resolvePlayer(item, seasonId, game, seasonProMap);
-      i++;
-    } else if (item.cmd === "kyokustart") {
+    }
+    // kyokustart
+    else if (item.cmd === "kyokustart") {
       resolveKyokuStart(umdGame.slice(i, i + 23), game, seasonProMap);
-      // kyokustart, point*4, dice, dora, haipai*16
-      i += 23;
-    } else if (item.cmd === "gameend") {
+      // skip point*4, dice, dora, haipai*16
+      i += 22;
+    }
+    // gameend
+    else if (item.cmd === "gameend") {
       resolveGameEnd(item, seasonProMap);
-      i++;
-    } else {
-      i++;
+    }
+    // tsumo
+    else if (item.cmd === "tsumo") {
+      resolveTsumo(item, game);
+    }
+    // sutehai
+    else if (item.cmd === "sutehai") {
+      resolveSutehai(item, game);
+    }
+    // chi pon kan ron richi tsumo tenpai noten
+    else if (item.cmd === "say") {
+      const sayType = item.args[1] as SayType;
+      // furo
+      if (
+        sayType === "chi" ||
+        sayType === "pon" ||
+        (sayType === "kan" && umdGame[i + 1].args.length > 2)
+      ) {
+        resolveFuro(umdGame.slice(i, i + 2), game, seasonProMap);
+        // skip open cmd
+        i++;
+      }
+      // richi
+      else if (sayType === "richi") {
+        resolveRichi(umdGame.slice(i, i + 3), game, seasonProMap);
+        // skip richi sutehai
+        i++;
+      }
+      // ryukyoku
+      else if (sayType === "noten" || sayType === "tenpai") {
+        resolveRyukyokuSay(item, game, seasonProMap);
+      }
+    }
+    // kan dora
+    else if (item.cmd === "dora") {
+      game.dora.push(item.args[0] as Pai);
+      game.doraPointer.push(item.args[1] as Pai);
     }
   }
+
+  // console.log(seasonProMap);
 }
 
 /**
@@ -93,6 +134,93 @@ const resolveGameEnd = (
         seasonPro.game_lowest_score,
         score
       );
+    }
+  }
+};
+
+/**
+ * resolve sutehai cmd (not include richi sutehai)
+ * @param sutehaiCmd sutehai cmd
+ * @param game current game info
+ */
+const resolveSutehai = (sutehaiCmd: UMDGameItem, game: Game) => {
+  const player = game.players.find(
+    (player) => player.code === sutehaiCmd.args[0]
+  ) as Player;
+  const sutehai = sutehaiCmd.args[1] as Pai;
+  player.sute.push(sutehai);
+  // tegiri
+  if (sutehaiCmd.args.length === 2) {
+    const idx = player.tehai.findIndex((pai) => pai === sutehai);
+    player.tehai.splice(idx, 1);
+  }
+};
+
+/**
+ * resolve tsumo cmd
+ * @param tsumoCmd tsumo cmd
+ * @param game current game info
+ */
+const resolveTsumo = (tsumoCmd: UMDGameItem, game: Game) => {
+  const player = game.players.find(
+    (player) => player.code === tsumoCmd.args[0]
+  ) as Player;
+  player.tehai.push(tsumoCmd.args[2] as Pai);
+};
+
+/**
+ * resolve furo cmd (chi, pon, min kan)
+ * @param furoCmds furo cmd and open cmd
+ * @param game current game info
+ * @param seasonProMap season pro map
+ */
+const resolveFuro = (
+  furoCmds: UMDGameItem[],
+  game: Game,
+  seasonProMap: Record<Code, SeasonPro>
+) => {
+  const code = furoCmds[0].args[0] as Code;
+  const player = game.players.find((player) => player.code === code);
+  if (player && player.status === "menzen") {
+    player.status = "furo";
+    seasonProMap[code].furo_num += 1;
+  }
+};
+
+/**
+ * resolve ryukyoku say cmd (tenpai noten)
+ * @param sayCmd tenpai or noten say
+ * @param game current game info
+ * @param seasonProMap season pro map
+ */
+const resolveRyukyokuSay = (
+  sayCmd: UMDGameItem,
+  game: Game,
+  seasonProMap: Record<Code, SeasonPro>
+) => {
+  const code = sayCmd.args[0] as Code;
+  const tenpai = sayCmd.args[1] as SayType;
+  const player = game.players.find((player) => player.code === code) as Player;
+  const seasonPro = seasonProMap[code] as SeasonPro;
+
+  if (player.status === "menzen") {
+    if (tenpai === "noten") {
+      seasonPro.ryukyoku_noten_menzen_num += 1;
+    } else if (tenpai === "tenpai") {
+      seasonPro.ryukyoku_tenpai_menzen_num += 1;
+    }
+  } else if (player.status === "furo") {
+    if (tenpai === "noten") {
+      seasonPro.ryukyoku_noten_furo_num += 1;
+    } else if (tenpai === "tenpai") {
+      seasonPro.ryukyoku_tenpai_furo_num += 1;
+    }
+  } else if (player.status === "richi" || player.status === "richi_chased") {
+    // noten richi is possible
+    if (tenpai === "noten") {
+      seasonPro.ryukyoku_noten_richi_num += 1;
+    } else if (tenpai === "tenpai") {
+      seasonPro.ryukyoku_tenpai_richi_num += 1;
     }
   }
 };

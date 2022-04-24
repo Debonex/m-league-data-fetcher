@@ -73,4 +73,14 @@ export const resolveKyokuStart = (
       }
     }
   }
+
+  for (const player of game.players) {
+    const seasonPro = seasonProMap[player.code] as SeasonPro;
+    seasonPro.haipai_dora_num += player.tehai.filter(
+      (hai) => hai === "5S" || hai === "5P" || hai === "5M"
+    ).length;
+
+    // TODO haipai shanten number
+    seasonPro.shanten_num += 0;
+  }
 };

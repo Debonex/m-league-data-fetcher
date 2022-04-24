@@ -23,5 +23,16 @@ type UMDCmd =
   | "tsumo"
   | "sutehai"
   | "say"
+  | "richi"
   | "open"
   | "agari";
+
+type SayType =
+  | "pon"
+  | "chi"
+  | "kan"
+  | "ron"
+  | "richi"
+  | "tsumo"
+  | "tenpai"
+  | "noten";
