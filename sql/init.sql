@@ -10,7 +10,7 @@
  Target Server Version : 3035005
  File Encoding         : 65001
 
- Date: 18/04/2022 12:56:08
+ Date: 24/04/2022 18:16:17
 */
 
 PRAGMA foreign_keys = false;
@@ -183,6 +183,7 @@ CREATE TABLE "season_pro" (
   "houjuu_furo_score" integer NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "blown_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "blown_score" integer NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+  "yaku" text NOT NULL ON CONFLICT REPLACE DEFAULT '',
   PRIMARY KEY ("id"),
   CONSTRAINT "season_id" FOREIGN KEY ("season_id") REFERENCES "season" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT "pro_id" FOREIGN KEY ("pro_id") REFERENCES "pro" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -239,7 +240,6 @@ CREATE TABLE "sqlite_sequence" (
 -- ----------------------------
 -- Records of sqlite_sequence
 -- ----------------------------
-INSERT INTO "sqlite_sequence" VALUES ('season_year', 4);
 INSERT INTO "sqlite_sequence" VALUES ('season_year', 4);
 
 -- ----------------------------

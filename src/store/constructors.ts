@@ -88,5 +88,19 @@ export function seasonPro(
     houjuu_furo_score: 0,
     blown_num: 0,
     blown_score: 0,
+    yaku: "",
+  };
+}
+
+export function seasonProPro(
+  seasonId: number,
+  pro1Id: number,
+  pro2Id: number
+): SeasonProPro {
+  return {
+    season_id: seasonId,
+    pro_id: pro1Id,
+    pro2_id: pro2Id,
+    point: 0,
   };
 }

@@ -19,3 +19,18 @@ export const doraCount = (tehai: Pai[], game: Game): number => {
   }
   return count;
 };
+
+/**
+ * get point for agari point string
+ * @param pointStr agari point string @example "満貫" @example "2600"
+ * @param isEast is east player
+ * @returns point number
+ */
+export const getPoint = (pointStr: string, isEast: boolean): number => {
+  if (pointStr === "満貫") return isEast ? 12000 : 8000;
+  if (pointStr === "跳満") return isEast ? 18000 : 12000;
+  if (pointStr === "倍満") return isEast ? 24000 : 16000;
+  if (pointStr === "三倍満") return isEast ? 32000 : 24000;
+  if (pointStr === "役満") return isEast ? 48000 : 32000;
+  return Number(pointStr);
+};

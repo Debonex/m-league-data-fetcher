@@ -5,6 +5,7 @@ interface Game {
   richibo: number;
   dora: Pai[];
   doraPointer: Pai[];
+  lastSuteBy: Code | "";
 }
 
 interface Player {
@@ -114,4 +115,13 @@ interface SeasonPro {
   houjuu_furo_score: number;
   blown_num: number;
   blown_score: number;
+  yaku: string;
+}
+
+interface SeasonProPro {
+  id?: number;
+  pro_id: number;
+  pro2_id: number;
+  point: number;
+  season_id: number;
 }

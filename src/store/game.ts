@@ -1,4 +1,12 @@
-import { getSeasonIdBySeasonCode } from "./database";
+import { seasonProPro } from "./constructors";
+import {
+  getProIdByProName,
+  getSeasonIdBySeasonCode,
+  getSeasonProPro,
+  insertSeasonProPro,
+  updateSeasonProPro,
+} from "./database";
+import { resolveAgari } from "./game_agari";
 import { resolveKyokuStart } from "./game_kyoku";
 import { resolvePlayer } from "./game_player";
 import { resolveRichi } from "./game_richi";
@@ -16,7 +24,9 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
     east: "A0",
     dora: [],
     doraPointer: [],
+    lastSuteBy: "",
   };
+  // init season pro map later in player cmd resolving
   const seasonProMap: Record<string, SeasonPro> = {};
   const seasonId = getSeasonIdBySeasonCode(seasonCode) as number;
 
@@ -34,7 +44,7 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
     }
     // gameend
     else if (item.cmd === "gameend") {
-      resolveGameEnd(item, seasonProMap);
+      resolveGameEnd(item, seasonProMap, game, seasonId);
     }
     // tsumo
     else if (item.cmd === "tsumo") {
@@ -73,19 +83,26 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
       game.dora.push(item.args[0] as Pai);
       game.doraPointer.push(item.args[1] as Pai);
     }
+    // agari
+    else if (item.cmd === "agari") {
+      resolveAgari(umdGame.slice(i, i + 4), game, seasonProMap);
+    }
   }
 
-  // console.log(seasonProMap);
+  console.log(seasonProMap);
 }
 
 /**
  * resolve game end cmd
  * @param gameEnd game end cmd
  * @param seasonProMap season pro map
+ * @param seasonId season id
  */
 const resolveGameEnd = (
   gameEnd: UMDGameItem,
-  seasonProMap: Record<Code, SeasonPro>
+  seasonProMap: Record<Code, SeasonPro>,
+  game: Game,
+  seasonId: number
 ) => {
   const rankPoints = [50, 10, -10, -30];
   const winds = { A0: "east", B0: "south", C0: "west", D0: "north" };
@@ -136,6 +153,40 @@ const resolveGameEnd = (
       );
     }
   }
+
+  // season_pro_pro
+  const players = game.players;
+  for (let i = 0; i < players.length; i++) {
+    for (let j = i + 1; j < players.length; j++) {
+      const player1 = players[i],
+        player2 = players[j],
+        point1 = pointMap[player1.code] as number,
+        point2 = pointMap[player2.code] as number;
+      const diffPoint = point1 - point2;
+      const pro1Id = getProIdByProName(player1.name);
+      const pro2Id = getProIdByProName(player2.name);
+      if (pro1Id && pro2Id) {
+        const seasonPro1Pro2 = getSeasonProPro(seasonId, pro1Id, pro2Id);
+        const seasonPro2Pro1 = getSeasonProPro(seasonId, pro2Id, pro1Id);
+        if (seasonPro1Pro2) {
+          seasonPro1Pro2.point += diffPoint;
+          updateSeasonProPro(seasonPro1Pro2);
+        } else {
+          const record = seasonProPro(seasonId, pro1Id, pro2Id);
+          record.point += diffPoint;
+          insertSeasonProPro(record);
+        }
+        if (seasonPro2Pro1) {
+          seasonPro2Pro1.point -= diffPoint;
+          updateSeasonProPro(seasonPro2Pro1);
+        } else {
+          const record = seasonProPro(seasonId, pro2Id, pro1Id);
+          record.point -= diffPoint;
+          insertSeasonProPro(record);
+        }
+      }
+    }
+  }
 };
 
 /**
@@ -147,6 +198,7 @@ const resolveSutehai = (sutehaiCmd: UMDGameItem, game: Game) => {
   const player = game.players.find(
     (player) => player.code === sutehaiCmd.args[0]
   ) as Player;
+  game.lastSuteBy = player.code;
   const sutehai = sutehaiCmd.args[1] as Pai;
   player.sute.push(sutehai);
   // tegiri
