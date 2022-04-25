@@ -4,7 +4,7 @@ import { storeGame } from "./game";
 
 const DATA_DIRECTORY = path.resolve("./data");
 
-const games = readdirSync(DATA_DIRECTORY).slice(0, 1);
+const games = readdirSync(DATA_DIRECTORY);
 
 for (const game of games) {
   const umdGame = JSON.parse(

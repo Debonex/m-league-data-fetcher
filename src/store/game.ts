@@ -3,7 +3,9 @@ import {
   getProIdByProName,
   getSeasonIdBySeasonCode,
   getSeasonProPro,
+  insertSeasonPro,
   insertSeasonProPro,
+  updateSeasonPro,
   updateSeasonProPro,
 } from "./database";
 import { resolveAgari } from "./game_agari";
@@ -18,22 +20,31 @@ import { resolveRichi } from "./game_richi";
  */
 export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
   const game: Game = {
+    id: "",
     players: [],
     bon: 0,
     richibo: 0,
     east: "A0",
     dora: [],
     doraPointer: [],
-    lastSuteBy: "",
+    lastSute: {
+      code: "",
+      richi: false,
+    },
+    wind: "1z",
   };
   // init season pro map later in player cmd resolving
-  const seasonProMap: Record<string, SeasonPro> = {};
+  const seasonProMap = {} as Record<Code, SeasonPro>;
   const seasonId = getSeasonIdBySeasonCode(seasonCode) as number;
 
   for (let i = 0; i < umdGame.length; i++) {
     const item = umdGame[i];
+    // gamestart
+    if (item.cmd === "gamestart") {
+      game.id = item.args[0].slice(3);
+    }
     // player
-    if (item.cmd === "player") {
+    else if (item.cmd === "player") {
       resolvePlayer(item, seasonId, game, seasonProMap);
     }
     // kyokustart
@@ -70,8 +81,6 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
       // richi
       else if (sayType === "richi") {
         resolveRichi(umdGame.slice(i, i + 3), game, seasonProMap);
-        // skip richi sutehai
-        i++;
       }
       // ryukyoku
       else if (sayType === "noten" || sayType === "tenpai") {
@@ -89,7 +98,15 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
     }
   }
 
-  console.log(seasonProMap);
+  // write season pro info into database
+  let code: Code;
+  for (code in seasonProMap) {
+    if (seasonProMap[code].id) {
+      updateSeasonPro(seasonProMap[code]);
+    } else {
+      insertSeasonPro(seasonProMap[code]);
+    }
+  }
 }
 
 /**
@@ -198,7 +215,10 @@ const resolveSutehai = (sutehaiCmd: UMDGameItem, game: Game) => {
   const player = game.players.find(
     (player) => player.code === sutehaiCmd.args[0]
   ) as Player;
-  game.lastSuteBy = player.code;
+  game.lastSute = {
+    code: player.code,
+    richi: sutehaiCmd.args.includes("richi"),
+  };
   const sutehai = sutehaiCmd.args[1] as Pai;
   player.sute.push(sutehai);
   // tegiri

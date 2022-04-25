@@ -1,11 +1,16 @@
 interface Game {
+  id: string;
   players: Player[];
   east: Code;
   bon: number;
   richibo: number;
   dora: Pai[];
   doraPointer: Pai[];
-  lastSuteBy: Code | "";
+  lastSute: {
+    code: Code | "";
+    richi: boolean;
+  };
+  wind: Wind;
 }
 
 interface Player {
@@ -17,7 +22,10 @@ interface Player {
   sute: Pai[];
   tehai: Pai[];
   renchan: number;
+  wind: Wind;
 }
+
+type Wind = "1z" | "2z" | "3z" | "4z";
 
 type MPai = "1m" | "2m" | "3m" | "4m" | "5m" | "5M" | "6m" | "7m" | "8m" | "9m";
 

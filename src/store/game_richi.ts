@@ -49,4 +49,6 @@ export const resolveRichi = (
   seasonPro.richi_han_num += 0;
   seasonPro.richi_machi_num += 0;
   seasonPro.richi_suji_num += 0;
+
+  player.status = "richi";
 };

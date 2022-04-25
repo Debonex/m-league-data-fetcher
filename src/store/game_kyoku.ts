@@ -39,12 +39,17 @@ export const resolveKyokuStart = (
   game.richibo = Number(kyokuStart.args[3]);
   game.dora = [];
   game.doraPointer = [];
-  game.lastSuteBy = "";
-  game.players.forEach((player) => {
+  game.lastSute = {
+    code: "",
+    richi: false,
+  };
+  game.wind = kyokuStart.args[4] as Wind;
+  game.players.forEach((player, idx) => {
     player.status = "menzen";
     player.tenpai = [];
     player.sute = [];
     player.tehai = [];
+    player.wind = kyokuStart.args[5 + idx] as Wind;
   });
   // count kyoku num for season pro
   const easeIdx = winds.indexOf(game.east);

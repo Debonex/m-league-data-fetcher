@@ -31,6 +31,7 @@ export const resolvePlayer = (
     sute: [],
     tehai: [],
     renchan: 0,
+    wind: "1z",
   });
   // init season pro metadata
   const proId = getProIdByProName(proName) as number;

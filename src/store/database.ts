@@ -38,6 +38,39 @@ export const getSeasonProByProIdAndSeasonId = (
 };
 
 /**
+ * update season pro by given season pro object
+ * @param seasonPro season pro object
+ */
+export const updateSeasonPro = (seasonPro: SeasonPro) => {
+  const set = Object.keys(seasonPro)
+    .filter((key) => !["id", "season_id", "pro_id", "team_id"].includes(key))
+    .map((key) => `${key} = '${seasonPro[key as keyof SeasonPro]}'`);
+
+  const sql = `update season_pro set ${set.join(",")} 
+  where id = ${seasonPro.id} 
+  and season_id = ${seasonPro.season_id} 
+  and pro_id = ${seasonPro.pro_id}`;
+
+  db.prepare(sql).run();
+};
+
+/**
+ * insert season pro by given season pro object
+ * @param seasonPro season pro object
+ */
+export const insertSeasonPro = (seasonPro: SeasonPro) => {
+  const columns = Object.keys(seasonPro).filter((key) => key !== "id");
+
+  const values = Object.keys(seasonPro)
+    .filter((key) => key !== "id")
+    .map((key) => `'${seasonPro[key as keyof SeasonPro]}'`);
+
+  const sql = `insert into season_pro (${columns.join(",")})
+              values (${values.join(",")})`;
+  db.prepare(sql).run();
+};
+
+/**
  * get pro id by pro name
  * @param proName pro name (no space) @example "小林剛"
  * @returns pro id
