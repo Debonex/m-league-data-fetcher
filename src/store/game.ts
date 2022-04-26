@@ -126,19 +126,21 @@ const resolveGameEnd = (
   const ranks = ["first", "second", "third", "fourth"];
 
   const pointMap: Partial<Record<Code, number>> = {};
+  const points: number[] = [];
 
   for (let i = 0; i < 4; i++) {
     const code = gameEnd.args[i * 2] as Code;
     const point = Number(gameEnd.args[i * 2 + 1]);
     pointMap[code] = point;
+    points.push(point);
   }
 
-  for (let i = 8; i < 12; i++) {
-    const arg = gameEnd.args[i];
-    const code = arg.slice(0, 2) as Code;
+  for (let i = 0; i < 4; i++) {
+    const code = gameEnd.args[i * 2] as Code;
+
+    const point = points[i];
     // 0,1,2,3
-    const rank = Number(arg.slice(-1));
-    const point = pointMap[code] as number;
+    const rank = points.filter((p) => p > point).length;
     const seasonPro = seasonProMap[code];
 
     // point
@@ -179,7 +181,7 @@ const resolveGameEnd = (
         player2 = players[j],
         point1 = pointMap[player1.code] as number,
         point2 = pointMap[player2.code] as number;
-      const diffPoint = point1 - point2;
+      const diffPoint = Number((point1 - point2).toFixed(1));
       const pro1Id = getProIdByProName(player1.name);
       const pro2Id = getProIdByProName(player2.name);
       if (pro1Id && pro2Id) {

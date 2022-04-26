@@ -10,7 +10,7 @@
  Target Server Version : 3035005
  File Encoding         : 65001
 
- Date: 24/04/2022 18:16:17
+ Date: 26/04/2022 15:13:03
 */
 
 PRAGMA foreign_keys = false;
@@ -268,7 +268,7 @@ INSERT INTO "team" VALUES (8, 'サクラナイツ', 'T008');
 -- ----------------------------
 -- Indexes structure for table pro
 -- ----------------------------
-CREATE UNIQUE INDEX "id"
+CREATE UNIQUE INDEX "proId"
 ON "pro" (
   "id" ASC
 );
@@ -276,9 +276,13 @@ ON "pro" (
 -- ----------------------------
 -- Indexes structure for table season
 -- ----------------------------
-CREATE UNIQUE INDEX "season_code"
+CREATE UNIQUE INDEX "seasonCode"
 ON "season" (
   "season_code" ASC
+);
+CREATE UNIQUE INDEX "seasonId"
+ON "season" (
+  "id" ASC
 );
 
 -- ----------------------------
@@ -287,11 +291,23 @@ ON "season" (
 UPDATE "sqlite_sequence" SET seq = 4 WHERE name = 'season_year';
 
 -- ----------------------------
+-- Indexes structure for table season_year
+-- ----------------------------
+CREATE INDEX "indexId"
+ON "season_year" (
+  "id" ASC
+);
+
+-- ----------------------------
 -- Indexes structure for table team
 -- ----------------------------
-CREATE UNIQUE INDEX "team_code"
+CREATE UNIQUE INDEX "teamCode"
 ON "team" (
   "team_code" ASC
+);
+CREATE UNIQUE INDEX "teamId"
+ON "team" (
+  "id" ASC
 );
 
 PRAGMA foreign_keys = true;
