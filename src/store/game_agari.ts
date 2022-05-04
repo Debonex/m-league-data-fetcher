@@ -109,10 +109,16 @@ export const resolveAgari = (
       if (agariYaku["一発"]) {
         seasonPro.agari_richi_ron_ippatsu_num += 1;
       }
+      if (agariYaku["裏ドラ"]) {
+        seasonPro.agari_richi_ron_uradora_kyoku_num += 1;
+      }
     } else {
       seasonPro.agari_richi_tsumo_num += 1;
       if (agariYaku["一発"]) {
         seasonPro.agari_richi_tsumo_ippatsu_num += 1;
+      }
+      if (agariYaku["裏ドラ"]) {
+        seasonPro.agari_richi_tsumo_uradora_kyoku_num += 1;
       }
       // 炸庄
       if (isNaN(Number(agariScoreStr)) && game.east !== code) {

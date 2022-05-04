@@ -146,15 +146,19 @@ const resolveGameEnd = (
     // point
     const rankPoint = rankPoints[rank];
     const scorePoint = Number((point - rankPoints[rank]).toFixed(1));
-    seasonPro.rank_point += rankPoint;
-    seasonPro.score_point += scorePoint;
+    seasonPro.rank_point = Number(
+      (seasonPro.rank_point + rankPoint).toFixed(1)
+    );
+    seasonPro.score_point = Number(
+      (seasonPro.score_point + scorePoint).toFixed(1)
+    );
 
     // rank
     const key = `${ranks[rank]}_${winds[code]}_num` as keyof SeasonPro;
     seasonPro[key]++;
 
     // score
-    const score = 30000 + scorePoint * 1000;
+    const score = Math.round(30000 + scorePoint * 1000);
     if (seasonPro.game_highest_score === null) {
       seasonPro.game_highest_score = score;
     } else {
