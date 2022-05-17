@@ -10,7 +10,7 @@
  Target Server Version : 3035005
  File Encoding         : 65001
 
- Date: 26/04/2022 15:13:03
+ Date: 17/05/2022 11:14:20
 */
 
 PRAGMA foreign_keys = false;
@@ -22,47 +22,51 @@ DROP TABLE IF EXISTS "pro";
 CREATE TABLE "pro" (
   "id" INTEGER NOT NULL,
   "pro_name" TEXT,
+  "birth" TEXT,
+  "birth_place" TEXT,
+  "org" TEXT,
+  "pro_year" integer,
   PRIMARY KEY ("id")
 );
 
 -- ----------------------------
 -- Records of pro
 -- ----------------------------
-INSERT INTO "pro" VALUES (1, '多井隆晴');
-INSERT INTO "pro" VALUES (2, '滝沢和典');
-INSERT INTO "pro" VALUES (3, '佐々木寿人');
-INSERT INTO "pro" VALUES (4, '朝倉康心');
-INSERT INTO "pro" VALUES (5, '近藤誠一');
-INSERT INTO "pro" VALUES (6, '園田賢');
-INSERT INTO "pro" VALUES (7, '黒沢咲');
-INSERT INTO "pro" VALUES (8, '前原雄大');
-INSERT INTO "pro" VALUES (9, '鈴木たろう');
-INSERT INTO "pro" VALUES (10, '松本吉弘');
-INSERT INTO "pro" VALUES (11, '勝又健志');
-INSERT INTO "pro" VALUES (12, '二階堂亜樹');
-INSERT INTO "pro" VALUES (13, '萩原聖人');
-INSERT INTO "pro" VALUES (14, '茅森早香');
-INSERT INTO "pro" VALUES (15, '小林剛');
-INSERT INTO "pro" VALUES (16, '村上淳');
-INSERT INTO "pro" VALUES (17, '石橋伸洋');
-INSERT INTO "pro" VALUES (18, '魚谷侑未');
-INSERT INTO "pro" VALUES (19, '高宮まり');
-INSERT INTO "pro" VALUES (20, '瀬戸熊直樹');
-INSERT INTO "pro" VALUES (21, '白鳥翔');
-INSERT INTO "pro" VALUES (22, '沢崎誠');
-INSERT INTO "pro" VALUES (23, '日向藍子');
-INSERT INTO "pro" VALUES (24, '内川幸太郎');
-INSERT INTO "pro" VALUES (25, '藤崎智');
-INSERT INTO "pro" VALUES (26, '瑞原明奈');
-INSERT INTO "pro" VALUES (27, '和久津晶');
-INSERT INTO "pro" VALUES (28, '丸山奏子');
-INSERT INTO "pro" VALUES (29, '岡田紗佳');
-INSERT INTO "pro" VALUES (30, '堀慎吾');
-INSERT INTO "pro" VALUES (31, '伊達朱里紗');
-INSERT INTO "pro" VALUES (32, '松ヶ瀬隆弥');
-INSERT INTO "pro" VALUES (33, '東城りお');
-INSERT INTO "pro" VALUES (34, '二階堂瑠美');
-INSERT INTO "pro" VALUES (35, '本田朋広');
+INSERT INTO "pro" VALUES (1, '多井隆晴', '1972-03-17', '東京都', 'RMU', 1995);
+INSERT INTO "pro" VALUES (2, '滝沢和典', '1979-12-06', '新潟県', '日本プロ麻雀連盟', 1999);
+INSERT INTO "pro" VALUES (3, '佐々木寿人', '1977-01-12', '宮城県', '日本プロ麻雀連盟', 2006);
+INSERT INTO "pro" VALUES (4, '朝倉康心', '1986-03-04', '福井県', '最高位戦日本プロ麻雀協会', 2018);
+INSERT INTO "pro" VALUES (5, '近藤誠一', '1963-08-01', '兵庫県', '最高位戦日本プロ麻雀協会', 1997);
+INSERT INTO "pro" VALUES (6, '園田賢', '1980-11-25', '兵庫県', '最高位戦日本プロ麻雀協会', 2003);
+INSERT INTO "pro" VALUES (7, '黒沢咲', '10-06', '東京都', '日本プロ麻雀連盟', 2005);
+INSERT INTO "pro" VALUES (8, '前原雄大', '1956-12-19', '東京都', '日本プロ麻雀連盟', 1981);
+INSERT INTO "pro" VALUES (9, '鈴木たろう', '1973-10-04', '茨城県', '最高位戦日本プロ麻雀協会', 1997);
+INSERT INTO "pro" VALUES (10, '松本吉弘', '1992-05-03', '神奈川県', '日本プロ麻雀協会', 2013);
+INSERT INTO "pro" VALUES (11, '勝又健志', '1981-03-15', '東京都', '日本プロ麻雀連盟', 1999);
+INSERT INTO "pro" VALUES (12, '二階堂亜樹', '1981-11-15', '神奈川県', '日本プロ麻雀連盟', 1999);
+INSERT INTO "pro" VALUES (13, '萩原聖人', '1971-08-21', '神奈川県', '日本プロ麻雀連盟', 2017);
+INSERT INTO "pro" VALUES (14, '茅森早香', '1982-05-04', '北海道', '最高位戦日本プロ麻雀協会', 2001);
+INSERT INTO "pro" VALUES (15, '小林剛', '1976-02-12', '東京都', '麻将連合-μ-', 1996);
+INSERT INTO "pro" VALUES (16, '村上淳', '1975-04-10', '東京都', '最高位戦日本プロ麻雀協会', 1997);
+INSERT INTO "pro" VALUES (17, '石橋伸洋', '1980-09-29', '千葉県', '最高位戦日本プロ麻雀協会', 2003);
+INSERT INTO "pro" VALUES (18, '魚谷侑未', '1985-11-02', '新潟県', '日本プロ麻雀連盟', 2008);
+INSERT INTO "pro" VALUES (19, '高宮まり', '1988-11-08', '茨城県', '日本プロ麻雀連盟', 2010);
+INSERT INTO "pro" VALUES (20, '瀬戸熊直樹', '1970-08-27', '千葉県', '日本プロ麻雀連盟', 1998);
+INSERT INTO "pro" VALUES (21, '白鳥翔', '1986-08-27', '東京都', '日本プロ麻雀連盟', 2006);
+INSERT INTO "pro" VALUES (22, '沢崎誠', '1955-01-13', '群馬県', '日本プロ麻雀連盟', 1984);
+INSERT INTO "pro" VALUES (23, '日向藍子', '1988-09-24', '長野県', '最高位戦日本プロ麻雀協会', 2011);
+INSERT INTO "pro" VALUES (24, '内川幸太郎', '1981-05-06', '長野県', '日本プロ麻雀連盟', 2006);
+INSERT INTO "pro" VALUES (25, '藤崎智', '1968-01-25', '秋田県', '日本プロ麻雀連盟', 1997);
+INSERT INTO "pro" VALUES (26, '瑞原明奈', '1986-11-19', '長崎県', '最高位戦日本プロ麻雀協会', 2014);
+INSERT INTO "pro" VALUES (27, '和久津晶', '1978-02-17', '東京都', '日本プロ麻雀連盟', 2007);
+INSERT INTO "pro" VALUES (28, '丸山奏子', '1993-08-17', '北海道', '最高位戦日本プロ麻雀協会', 2018);
+INSERT INTO "pro" VALUES (29, '岡田紗佳', '1994-02-19', '東京都', '日本プロ麻雀連盟', 2017);
+INSERT INTO "pro" VALUES (30, '堀慎吾', '1984-03-23', '新潟県', '日本プロ麻雀協会', 2010);
+INSERT INTO "pro" VALUES (31, '伊達朱里紗', '1991-05-10', '兵庫県', '日本プロ麻雀連盟', 2019);
+INSERT INTO "pro" VALUES (32, '松ヶ瀬隆弥', '1980-04-11', '北海道', 'RMU', 2009);
+INSERT INTO "pro" VALUES (33, '東城りお', '1990-09-18', '秋田県', '日本プロ麻雀連盟', 2013);
+INSERT INTO "pro" VALUES (34, '二階堂瑠美', '1980-09-27', '神奈川県', '日本プロ麻雀連盟', 1999);
+INSERT INTO "pro" VALUES (35, '本田朋広', '1983-10-03', '富山県', '日本プロ麻雀連盟', 2012);
 
 -- ----------------------------
 -- Table structure for season
