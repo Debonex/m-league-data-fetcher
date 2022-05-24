@@ -65,6 +65,10 @@ interface SeasonPro {
   fourth_south_num: number;
   fourth_west_num: number;
   fourth_north_num: number;
+  first_score: number;
+  second_score: number;
+  third_score: number;
+  fourth_score: number;
   score_point: number;
   rank_point: number;
   kyoku_east_num: number;

@@ -10,7 +10,7 @@
  Target Server Version : 3035005
  File Encoding         : 65001
 
- Date: 18/05/2022 00:07:49
+ Date: 24/05/2022 15:44:22
 */
 
 PRAGMA foreign_keys = false;
@@ -131,6 +131,10 @@ CREATE TABLE "season_pro" (
   "fourth_south_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "fourth_west_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "fourth_north_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+  "first_score" integer NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+  "second_score" integer NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+  "third_score" integer NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+  "fourth_score" integer NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "score_point" real NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "rank_point" real NOT NULL ON CONFLICT REPLACE DEFAULT 0,
   "kyoku_east_num" INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,

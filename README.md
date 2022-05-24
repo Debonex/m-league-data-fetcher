@@ -44,6 +44,12 @@ or
 yarn store
 ```
 
+#### notice
+
+game end points in L001_S010_0015_02A.json are wrong.
+A0: 58.0 -> 38.0
+C0: 18.0 -> 38.0
+
 ## Other
 
 Tested environment:

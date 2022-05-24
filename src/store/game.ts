@@ -109,6 +109,32 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
   }
 }
 
+const pointMap: Record<number, number> = {
+  "1": 50,
+  "1.5": 30,
+  "2": 10,
+  "2.5": 0,
+  "3": -10,
+  "3.5": -20,
+  "4": -30,
+};
+
+/**
+ * calculate rank point for given point and point list
+ * @param point
+ * @param points
+ * @returns
+ */
+const calcRankPoint = (point: number, points: number[]) => {
+  // 1,2,3,4
+  const rawRank = points.filter((p) => p > point).length + 1;
+  // there are same points
+  if (points.filter((p) => p == point).length > 1) {
+    return pointMap[rawRank + 0.5];
+  }
+  return pointMap[rawRank];
+};
+
 /**
  * resolve game end cmd
  * @param gameEnd game end cmd
@@ -121,7 +147,6 @@ const resolveGameEnd = (
   game: Game,
   seasonId: number
 ) => {
-  const rankPoints = [50, 10, -10, -30];
   const winds = { A0: "east", B0: "south", C0: "west", D0: "north" };
   const ranks = ["first", "second", "third", "fourth"];
 
@@ -139,13 +164,14 @@ const resolveGameEnd = (
     const code = gameEnd.args[i * 2] as Code;
 
     const point = points[i];
-    // 0,1,2,3
-    const rank = points.filter((p) => p > point).length;
     const seasonPro = seasonProMap[code];
 
+    const rankStr = ranks[points.filter((p) => p > point).length];
+
     // point
-    const rankPoint = rankPoints[rank];
-    const scorePoint = Number((point - rankPoints[rank]).toFixed(1));
+    const rankPoint = calcRankPoint(point, points);
+    const scorePoint = Number((point - rankPoint).toFixed(1));
+
     seasonPro.rank_point = Number(
       (seasonPro.rank_point + rankPoint).toFixed(1)
     );
@@ -153,12 +179,16 @@ const resolveGameEnd = (
       (seasonPro.score_point + scorePoint).toFixed(1)
     );
 
-    // rank
-    const key = `${ranks[rank]}_${winds[code]}_num` as keyof SeasonPro;
-    seasonPro[key]++;
+    // rank num
+    const rankNumKey = `${rankStr}_${winds[code]}_num` as keyof SeasonPro;
+    seasonPro[rankNumKey]++;
 
     // score
     const score = Math.round(30000 + scorePoint * 1000);
+
+    const rankScoreKey = `${rankStr}_score` as keyof SeasonPro;
+    (seasonPro[rankScoreKey] as number) += score;
+
     if (seasonPro.game_highest_score === null) {
       seasonPro.game_highest_score = score;
     } else {
