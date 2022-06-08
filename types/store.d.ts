@@ -1,5 +1,6 @@
 interface Game {
   id: string;
+  startTime: string;
   players: Player[];
   east: Code;
   bon: number;
@@ -136,4 +137,18 @@ interface SeasonProPro {
   pro2_id: number;
   point: number;
   season_id: number;
+}
+
+interface GameEntity {
+  id?: number;
+  time: string;
+  pid0: number;
+  pid1: number;
+  pid2: number;
+  pid3: number;
+  pp0: number;
+  pp1: number;
+  pp2: number;
+  pp3: number;
+  seasonId: number;
 }

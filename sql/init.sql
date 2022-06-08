@@ -10,10 +10,33 @@
  Target Server Version : 3035005
  File Encoding         : 65001
 
- Date: 24/05/2022 15:44:22
+ Date: 08/06/2022 14:51:28
 */
 
 PRAGMA foreign_keys = false;
+
+-- ----------------------------
+-- Table structure for game
+-- ----------------------------
+DROP TABLE IF EXISTS "game";
+CREATE TABLE "game" (
+  "id" INTEGER NOT NULL,
+  "time" text,
+  "pid_0" integer,
+  "pid_1" integer,
+  "pid_2" integer,
+  "pid_3" integer,
+  "pp_0" integer,
+  "pp_1" integer,
+  "pp_2" integer,
+  "pp_3" integer,
+  "season_id" integer,
+  PRIMARY KEY ("id")
+);
+
+-- ----------------------------
+-- Records of game
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for pro

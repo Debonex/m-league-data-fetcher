@@ -3,6 +3,7 @@ import {
   getProIdByProName,
   getSeasonIdBySeasonCode,
   getSeasonProPro,
+  insertGame,
   insertSeasonPro,
   insertSeasonProPro,
   updateSeasonPro,
@@ -21,6 +22,7 @@ import { resolveRichi } from "./game_richi";
 export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
   const game: Game = {
     id: "",
+    startTime: "",
     players: [],
     bon: 0,
     richibo: 0,
@@ -42,6 +44,7 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
     // gamestart
     if (item.cmd === "gamestart") {
       game.id = item.args[0].slice(3);
+      game.startTime = item.time;
     }
     // player
     else if (item.cmd === "player") {
@@ -240,6 +243,21 @@ const resolveGameEnd = (
       }
     }
   }
+
+  // game
+  const gameEntity: GameEntity = {
+    time: game.startTime,
+    pid0: getProIdByProName(game.players[0].name) as number,
+    pid1: getProIdByProName(game.players[1].name) as number,
+    pid2: getProIdByProName(game.players[2].name) as number,
+    pid3: getProIdByProName(game.players[3].name) as number,
+    pp0: pointMap[game.players[0].code] as number,
+    pp1: pointMap[game.players[1].code] as number,
+    pp2: pointMap[game.players[2].code] as number,
+    pp3: pointMap[game.players[3].code] as number,
+    seasonId: seasonId,
+  };
+  insertGame(gameEntity);
 };
 
 /**

@@ -150,3 +150,24 @@ export const insertSeasonProPro = (seasonProPro: SeasonProPro) => {
     seasonProPro.point
   );
 };
+
+/**
+ * insert game entity by given item
+ * @param game game entity
+ */
+export const insertGame = (game: GameEntity) => {
+  db.prepare(
+    "insert into game (time, pid_0, pid_1, pid_2, pid_3, pp_0, pp_1, pp_2, pp_3, season_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+  ).run(
+    game.time,
+    game.pid0,
+    game.pid1,
+    game.pid2,
+    game.pid3,
+    game.pp0,
+    game.pp1,
+    game.pp2,
+    game.pp3,
+    game.seasonId
+  );
+};
