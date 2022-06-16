@@ -10,7 +10,7 @@
  Target Server Version : 3035005
  File Encoding         : 65001
 
- Date: 08/06/2022 14:51:28
+ Date: 16/06/2022 14:56:07
 */
 
 PRAGMA foreign_keys = false;
@@ -26,11 +26,15 @@ CREATE TABLE "game" (
   "pid_1" integer,
   "pid_2" integer,
   "pid_3" integer,
-  "pp_0" integer,
-  "pp_1" integer,
-  "pp_2" integer,
-  "pp_3" integer,
+  "pp_0" real,
+  "pp_1" real,
+  "pp_2" real,
+  "pp_3" real,
   "season_id" integer,
+  "team_id_0" integer,
+  "team_id_1" integer,
+  "team_id_2" integer,
+  "team_id_3" integer,
   PRIMARY KEY ("id")
 );
 
@@ -290,8 +294,8 @@ CREATE TABLE "team" (
 -- Records of team
 -- ----------------------------
 INSERT INTO "team" VALUES (1, 'ドリブンズ', 'T001');
-INSERT INTO "team" VALUES (2, '麻雀格闘倶楽部', 'T002');
-INSERT INTO "team" VALUES (3, '風林火山', 'T003');
+INSERT INTO "team" VALUES (2, '麻雀格闘倶楽部', 'T003');
+INSERT INTO "team" VALUES (3, '風林火山', 'T002');
 INSERT INTO "team" VALUES (4, 'ABEMAS', 'T004');
 INSERT INTO "team" VALUES (5, 'フェニックス', 'T005');
 INSERT INTO "team" VALUES (6, '雷電', 'T006');

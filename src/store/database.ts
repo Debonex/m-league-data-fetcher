@@ -157,7 +157,8 @@ export const insertSeasonProPro = (seasonProPro: SeasonProPro) => {
  */
 export const insertGame = (game: GameEntity) => {
   db.prepare(
-    "insert into game (time, pid_0, pid_1, pid_2, pid_3, pp_0, pp_1, pp_2, pp_3, season_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    "insert into game (time, pid_0, pid_1, pid_2, pid_3, pp_0, pp_1, pp_2, pp_3, team_id_0, team_id_1, team_id_2, team_id_3, season_id) \
+    values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
   ).run(
     game.time,
     game.pid0,
@@ -168,6 +169,10 @@ export const insertGame = (game: GameEntity) => {
     game.pp1,
     game.pp2,
     game.pp3,
+    game.teamId0,
+    game.teamId1,
+    game.teamId2,
+    game.teamId3,
     game.seasonId
   );
 };

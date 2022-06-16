@@ -21,9 +21,11 @@ export const resolvePlayer = (
   const code = item.args[0] as Code;
   const proName = item.args[1].replace(" ", "");
   const teamCode = item.args[3];
+  const teamId = getTeamIdByTeamCode(teamCode) as number;
   // init game players
   game.players.push({
     name: proName,
+    teamId,
     code: code,
     point: 0,
     status: "menzen",
@@ -35,7 +37,6 @@ export const resolvePlayer = (
   });
   // init season pro metadata
   const proId = getProIdByProName(proName) as number;
-  const teamId = getTeamIdByTeamCode(teamCode) as number;
   const storedSeasonPro = getSeasonProByProIdAndSeasonId(proId, seasonId);
   if (storedSeasonPro) {
     seasonProMap[code] = storedSeasonPro;

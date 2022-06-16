@@ -24,6 +24,7 @@ interface Player {
   tehai: Pai[];
   renchan: number;
   wind: Wind;
+  teamId: number;
 }
 
 type Wind = "1z" | "2z" | "3z" | "4z";
@@ -150,5 +151,9 @@ interface GameEntity {
   pp1: number;
   pp2: number;
   pp3: number;
+  teamId0: number;
+  teamId1: number;
+  teamId2: number;
+  teamId3: number;
   seasonId: number;
 }

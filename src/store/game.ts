@@ -255,6 +255,10 @@ const resolveGameEnd = (
     pp1: pointMap[game.players[1].code] as number,
     pp2: pointMap[game.players[2].code] as number,
     pp3: pointMap[game.players[3].code] as number,
+    teamId0: game.players[0].teamId,
+    teamId1: game.players[1].teamId,
+    teamId2: game.players[2].teamId,
+    teamId3: game.players[3].teamId,
     seasonId: seasonId,
   };
   insertGame(gameEntity);
