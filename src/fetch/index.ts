@@ -5,16 +5,17 @@ import { writeFile, mkdirSync, existsSync } from "fs";
 import path from "path";
 import { config } from "dotenv";
 
-const paifuSessionId = config().parsed?.paifuSessionId;
-if (!paifuSessionId) {
-  throw "Please enter your paifuSessionId in .env file, for more information, please check README.md.";
+const password = config().parsed?.password;
+if (!password) {
+  throw "Please enter your password in .env file, for more information, please check README.md.";
 }
 
 const SEASON_LIST = [
   "games/2018-season",
   "games/2019-season",
   "games/2020-season",
-  // current season (2021)
+  "games/2021-season",
+  // current season (2022)
   "games",
 ];
 const TARGET_DIRECTORY = path.resolve("./data");
@@ -45,11 +46,18 @@ for (const season of SEASON_LIST) {
         .map((item) => item.getAttribute("data-game-id"));
       for (const gameId of gameIdList) {
         if (!gameId) continue;
-        const gameInfo = await req.get<string>(`${GAME_URL}?gameid=${gameId}`, {
-          headers: {
-            Cookie: `paifuSessionId=${paifuSessionId}`,
-          },
-        });
+        const formData = new URLSearchParams();
+        formData.append("password", password);
+        const gameInfo = await req.post<string>(
+          `${GAME_URL}?gameid=${gameId}`,
+          formData,
+          {
+            headers: {
+              origin: "https://m-league.jp",
+              referer: "https://m-league.jp/",
+            },
+          }
+        );
         const regMatches = gameInfo.data.match(GAME_DATA_REG);
         if (regMatches) {
           writeFile(

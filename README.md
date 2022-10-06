@@ -20,7 +20,8 @@ yarn
 
 - "日程・対戦成績" => choose any match day => "牌譜をみる"
 
-- check site cookies, copy paifuSessionId and enter it in the .env file.
+- view anyone of paifu, for example, https://viewer.ml-log.jp/web/viewer?gameid=L001_S013_0002_01A.
+check the post request body, paste the password parameter into ```.env``` file
 
 ```shell
 npm run fetch

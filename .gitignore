@@ -4,3 +4,4 @@ dist
 example
 data
 *.db
+.env
