@@ -8,41 +8,18 @@ Fetch and store m-league haifu(牌譜) information.
 npm install
 ```
 
-or
-
-```shell
-yarn
-```
-
 ### fetch haifu information
-
-- sign in [https://m-league.jp/](https://m-league.jp/)
-
-- "日程・対戦成績" => choose any match day => "牌譜をみる"
-
-- view anyone of paifu, for example, https://viewer.ml-log.jp/web/viewer?gameid=L001_S013_0002_01A.
-check the post request body, paste the password parameter into ```.env``` file
 
 ```shell
 npm run fetch
 ```
 
-or
-
-```shell
-yarn fetch
-```
-
 ### store haifu information to database (sqlite3)
+
+init your database with ```sql/init.sql```
 
 ```shell
 npm run store
-```
-
-or
-
-```shell
-yarn store
 ```
 
 ### Notice!
@@ -74,7 +51,3 @@ D0: 26.4 -> 76.4
 Tested environment:
 
 - node: v16.14.0
-
-- yarn -v: 1.22.17
-
-- operation system: Windows 10

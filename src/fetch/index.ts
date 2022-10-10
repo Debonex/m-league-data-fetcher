@@ -1,14 +1,9 @@
 import axios from "axios";
 import { parse } from "node-html-parser";
 import sleep from "../utils/sleep";
-import { writeFile, mkdirSync, existsSync } from "fs";
+import { writeFile, mkdirSync, existsSync, readdirSync } from "fs";
 import path from "path";
-import { config } from "dotenv";
-
-const password = config().parsed?.password;
-if (!password) {
-  throw "Please enter your password in .env file, for more information, please check README.md.";
-}
+import password from "./password";
 
 const SEASON_LIST = [
   "games/2018-season",
@@ -34,6 +29,8 @@ if (!existsSync(TARGET_DIRECTORY)) {
   mkdirSync(TARGET_DIRECTORY);
 }
 
+const fetchedGames = readdirSync(TARGET_DIRECTORY);
+
 // multiple seasons in parallel requests, for one season, every match(半荘) is in sequence
 for (const season of SEASON_LIST) {
   console.time(season);
@@ -45,9 +42,9 @@ for (const season of SEASON_LIST) {
         .querySelectorAll(".js-viewer-form")
         .map((item) => item.getAttribute("data-game-id"));
       for (const gameId of gameIdList) {
-        if (!gameId) continue;
+        if (!gameId || fetchedGames.includes(`${gameId}.json`)) continue;
         const formData = new URLSearchParams();
-        formData.append("password", password);
+        formData.append("password", password(new Date()));
         const gameInfo = await req.post<string>(
           `${GAME_URL}?gameid=${gameId}`,
           formData,

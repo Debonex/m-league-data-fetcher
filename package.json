@@ -15,7 +15,6 @@
   "dependencies": {
     "axios": "^0.26.1",
     "better-sqlite3": "^7.5.1",
-    "dotenv": "^16.0.0",
     "node-html-parser": "^5.3.3"
   },
   "devDependencies": {
