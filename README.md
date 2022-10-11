@@ -5,13 +5,13 @@ Fetch and store m-league haifu(牌譜) information.
 ## Usage
 
 ```shell
-npm install
+yarn
 ```
 
 ### fetch haifu information
 
 ```shell
-npm run fetch
+yarn fetch
 ```
 
 ### store haifu information to database (sqlite3)
@@ -19,7 +19,7 @@ npm run fetch
 init your database with `sql/init.sql`
 
 ```shell
-npm run store
+yarn store
 ```
 
 ### Other
