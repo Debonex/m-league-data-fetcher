@@ -1,9 +1,16 @@
-import path from "path";
 import Database from "better-sqlite3";
+import config from "../config";
 
-const DB_FILE = path.resolve("./sql/mleague.db");
+const db = new Database(config.dbPath);
 
-const db = new Database(DB_FILE);
+/**
+ * get game by game start time
+ * @param time time str
+ * @returns game entity object
+ */
+export const getGameByTime = (time: string): GameEntity | undefined => {
+  return db.prepare("select * from game where time = ?").get(time);
+};
 
 /**
  * get season pro by pro name and season code
@@ -101,54 +108,6 @@ export const getSeasonIdBySeasonCode = (
 export const getTeamIdByTeamCode = (teamCode?: string): number | undefined => {
   return db.prepare("select id from team where team_code = ?").get(teamCode)
     ?.id;
-};
-
-/**
- * get season pro pro by season id, pro1 id, pro2 id
- * @param seasonId season id
- * @param pro1Id pro1 id
- * @param pro2Id pro2 id
- */
-export const getSeasonProPro = (
-  seasonId: number,
-  pro1Id: number,
-  pro2Id: number
-): SeasonProPro | undefined => {
-  return db
-    .prepare(
-      "select * from season_pro_pro where season_id = ? and pro_id = ? and pro2_id = ?"
-    )
-    .get(seasonId, pro1Id, pro2Id);
-};
-
-/**
- * update season pro pro by given item
- * @param seasonProPro
- */
-export const updateSeasonProPro = (seasonProPro: SeasonProPro) => {
-  db.prepare(
-    "update season_pro_pro set point = ? where pro_id = ? and pro2_id = ? and season_id = ?"
-  ).run(
-    seasonProPro.point,
-    seasonProPro.pro_id,
-    seasonProPro.pro2_id,
-    seasonProPro.season_id
-  );
-};
-
-/**
- * insert season pro pro by given item
- * @param seasonProPro
- */
-export const insertSeasonProPro = (seasonProPro: SeasonProPro) => {
-  db.prepare(
-    "insert into season_pro_pro (season_id, pro_id, pro2_id, point) values (?, ?, ?, ?)"
-  ).run(
-    seasonProPro.season_id,
-    seasonProPro.pro_id,
-    seasonProPro.pro2_id,
-    seasonProPro.point
-  );
 };
 
 /**

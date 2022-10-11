@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "fetch information about m-league",
   "scripts": {
-    "fetch": "tsc && node ./dist/fetch/index.js",
-    "store": "tsc && node ./dist/store/index.js"
+    "fetch": "tsc && node ./dist/fetch/index.js && node ./dist/fetch/fix.js",
+    "store": "tsc && node ./dist/store/index.js",
+    "update": "tsc && node ./dist/fetch/index.js && node ./dist/fetch/fix.js && node ./dist/store/index.js"
   },
   "keywords": [
     "m-league",
@@ -15,7 +16,6 @@
   "dependencies": {
     "axios": "^0.26.1",
     "better-sqlite3": "^7.5.1",
-    "dotenv": "^16.0.0",
     "node-html-parser": "^5.3.3"
   },
   "devDependencies": {
