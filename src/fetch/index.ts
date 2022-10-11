@@ -1,23 +1,13 @@
 import axios from "axios";
+import { existsSync, mkdirSync, readdirSync, writeFile } from "fs";
 import { parse } from "node-html-parser";
-import sleep from "../utils/sleep";
-import { writeFile, mkdirSync, existsSync, readdirSync } from "fs";
 import path from "path";
+import config from "../config";
+import sleep from "../utils/sleep";
 import password from "./password";
 
-const SEASON_LIST = [
-  "games/2018-season",
-  "games/2019-season",
-  "games/2020-season",
-  "games/2021-season",
-  // current season (2022)
-  "games",
-];
-const TARGET_DIRECTORY = path.resolve("./data");
-const BASE_URL = "https://m-league.jp";
-const GAME_URL = "https://viewer.ml-log.jp/web/viewer";
 const GAME_DATA_REG = /UMP_PLAYER\.init\(true, true, '(.+)', autoplay\);/;
-const REQUEST_GAP = 500; // The frequency of requests is about REQUEST_GAP/SEASON_LIST.length (ms)
+const REQUEST_INTERVAL = 500; // The frequency of requests is about REQUEST_GAP/SEASON_LIST.length (ms
 
 // set timeout as 30s for every request
 const req = axios.create({
@@ -25,17 +15,17 @@ const req = axios.create({
 });
 
 // create directory for data storage
-if (!existsSync(TARGET_DIRECTORY)) {
-  mkdirSync(TARGET_DIRECTORY);
+if (!existsSync(config.dataPath)) {
+  mkdirSync(config.dataPath);
 }
 
-const fetchedGames = readdirSync(TARGET_DIRECTORY);
+const fetchedGames = readdirSync(config.dataPath);
 
 // multiple seasons in parallel requests, for one season, every match(半荘) is in sequence
-for (const season of SEASON_LIST) {
+for (const season of config.seasonList) {
   console.time(season);
   req
-    .get<string>(`${BASE_URL}/${season}`)
+    .get<string>(`${config.baseUrl}/${season}`)
     .then(async (res) => {
       const seasonPage = parse(res.data);
       const gameIdList = seasonPage
@@ -46,7 +36,7 @@ for (const season of SEASON_LIST) {
         const formData = new URLSearchParams();
         formData.append("password", password(new Date()));
         const gameInfo = await req.post<string>(
-          `${GAME_URL}?gameid=${gameId}`,
+          `${config.gameUrl}?gameid=${gameId}`,
           formData,
           {
             headers: {
@@ -58,7 +48,7 @@ for (const season of SEASON_LIST) {
         const regMatches = gameInfo.data.match(GAME_DATA_REG);
         if (regMatches) {
           writeFile(
-            path.resolve(TARGET_DIRECTORY, `${gameId}.json`),
+            path.resolve(config.dataPath, `${gameId}.json`),
             regMatches[1],
             { encoding: "utf-8" },
             () => {
@@ -66,7 +56,7 @@ for (const season of SEASON_LIST) {
             }
           );
         }
-        await sleep(REQUEST_GAP);
+        await sleep(REQUEST_INTERVAL);
       }
       console.timeLog(season, `fetch games info successfully.`);
     })

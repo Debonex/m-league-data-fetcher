@@ -1,9 +1,7 @@
-import path from "path";
 import Database from "better-sqlite3";
+import config from "../config";
 
-const DB_FILE = path.resolve("./sql/mleague.db");
-
-const db = new Database(DB_FILE);
+const db = new Database(config.dbPath);
 
 /**
  * get game by game start time
