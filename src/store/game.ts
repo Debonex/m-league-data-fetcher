@@ -1,13 +1,10 @@
-import { seasonProPro } from "./constructors";
 import {
+  getGameByTime,
   getProIdByProName,
   getSeasonIdBySeasonCode,
-  getSeasonProPro,
   insertGame,
   insertSeasonPro,
-  insertSeasonProPro,
   updateSeasonPro,
-  updateSeasonProPro,
 } from "./database";
 import { resolveAgari } from "./game_agari";
 import { resolveKyokuStart } from "./game_kyoku";
@@ -45,6 +42,10 @@ export function storeGame(umdGame: UMDGameItem[], seasonCode: string) {
     if (item.cmd === "gamestart") {
       game.id = item.args[0].slice(3);
       game.startTime = item.time;
+      // skip stored game
+      if (getGameByTime(item.time)) {
+        return;
+      }
     }
     // player
     else if (item.cmd === "player") {
@@ -207,40 +208,6 @@ const resolveGameEnd = (
         seasonPro.game_lowest_score,
         score
       );
-    }
-  }
-
-  // season_pro_pro
-  const players = game.players;
-  for (let i = 0; i < players.length; i++) {
-    for (let j = i + 1; j < players.length; j++) {
-      const player1 = players[i],
-        player2 = players[j],
-        point1 = pointMap[player1.code] as number,
-        point2 = pointMap[player2.code] as number;
-      const diffPoint = Number((point1 - point2).toFixed(1));
-      const pro1Id = getProIdByProName(player1.name);
-      const pro2Id = getProIdByProName(player2.name);
-      if (pro1Id && pro2Id) {
-        const seasonPro1Pro2 = getSeasonProPro(seasonId, pro1Id, pro2Id);
-        const seasonPro2Pro1 = getSeasonProPro(seasonId, pro2Id, pro1Id);
-        if (seasonPro1Pro2) {
-          seasonPro1Pro2.point += diffPoint;
-          updateSeasonProPro(seasonPro1Pro2);
-        } else {
-          const record = seasonProPro(seasonId, pro1Id, pro2Id);
-          record.point += diffPoint;
-          insertSeasonProPro(record);
-        }
-        if (seasonPro2Pro1) {
-          seasonPro2Pro1.point -= diffPoint;
-          updateSeasonProPro(seasonPro2Pro1);
-        } else {
-          const record = seasonProPro(seasonId, pro2Id, pro1Id);
-          record.point -= diffPoint;
-          insertSeasonProPro(record);
-        }
-      }
     }
   }
 

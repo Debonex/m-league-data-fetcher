@@ -10,7 +10,7 @@
  Target Server Version : 3035005
  File Encoding         : 65001
 
- Date: 16/06/2022 14:56:07
+ Date: 11/10/2022 10:01:45
 */
 
 PRAGMA foreign_keys = false;
@@ -96,6 +96,9 @@ INSERT INTO "pro" VALUES (32, '松ヶ瀬隆弥', 3, '1980-04-11', '北海道', '
 INSERT INTO "pro" VALUES (33, '東城りお', 5, '1990-09-18', '秋田県', '日本プロ麻雀連盟', 2013);
 INSERT INTO "pro" VALUES (34, '二階堂瑠美', 3, '1980-09-27', '神奈川県', '日本プロ麻雀連盟', 1999);
 INSERT INTO "pro" VALUES (35, '本田朋広', 6, '1983-10-03', '富山県', '日本プロ麻雀連盟', 2012);
+INSERT INTO "pro" VALUES (36, '渋川難波', 8, '1986-05-19', '	広島県', '日本プロ麻雀協会', 2011);
+INSERT INTO "pro" VALUES (37, '仲林圭', 7, '1985-09-17', '東京都', '日本プロ麻雀協会', 2009);
+INSERT INTO "pro" VALUES (38, '鈴木優', 7, '1981-09-13', '愛知県', '最高位戦日本プロ麻雀協会', 2002);
 
 -- ----------------------------
 -- Table structure for season
@@ -229,23 +232,6 @@ CREATE TABLE "season_pro" (
 
 -- ----------------------------
 -- Records of season_pro
--- ----------------------------
-
--- ----------------------------
--- Table structure for season_pro_pro
--- ----------------------------
-DROP TABLE IF EXISTS "season_pro_pro";
-CREATE TABLE "season_pro_pro" (
-  "id" INTEGER NOT NULL,
-  "pro_id" INTEGER,
-  "pro2_id" INTEGER,
-  "point" real,
-  "season_id" INTEGER,
-  PRIMARY KEY ("id")
-);
-
--- ----------------------------
--- Records of season_pro_pro
 -- ----------------------------
 
 -- ----------------------------

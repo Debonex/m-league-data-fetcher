@@ -4,7 +4,8 @@
   "description": "fetch information about m-league",
   "scripts": {
     "fetch": "tsc && node ./dist/fetch/index.js",
-    "store": "tsc && node ./dist/store/index.js"
+    "store": "tsc && node ./dist/store/index.js",
+    "update": "tsc && node ./dist/fetch/index.js && node ./dist/store/index.js"
   },
   "keywords": [
     "m-league",

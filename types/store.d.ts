@@ -132,16 +132,9 @@ interface SeasonPro {
   yaku: string;
 }
 
-interface SeasonProPro {
-  id?: number;
-  pro_id: number;
-  pro2_id: number;
-  point: number;
-  season_id: number;
-}
-
 interface GameEntity {
   id?: number;
+  // gamestart time
   time: string;
   pid0: number;
   pid1: number;
