@@ -20,7 +20,8 @@ export default defineFetcherConfig({
     "games/2019-season",
     "games/2020-season",
     "games/2021-season",
-    // current season (2022)
+    "games/2022-season",
+    // current season (2023)
     "games",
   ],
   dataPath: "./data",

@@ -10,7 +10,7 @@
  Target Server Version : 3035005
  File Encoding         : 65001
 
- Date: 11/10/2022 10:01:45
+ Date: 28/12/2023 22:21:06
 */
 
 PRAGMA foreign_keys = false;
@@ -99,6 +99,13 @@ INSERT INTO "pro" VALUES (35, '本田朋広', 6, '1983-10-03', '富山県', '日
 INSERT INTO "pro" VALUES (36, '渋川難波', 8, '1986-05-19', '	広島県', '日本プロ麻雀協会', 2011);
 INSERT INTO "pro" VALUES (37, '仲林圭', 7, '1985-09-17', '東京都', '日本プロ麻雀協会', 2009);
 INSERT INTO "pro" VALUES (38, '鈴木優', 7, '1981-09-13', '愛知県', '最高位戦日本プロ麻雀協会', 2002);
+INSERT INTO "pro" VALUES (39, '醍醐大', 5, '1976-04-21', '千葉県', '最高位戦日本プロ麻雀協会', 2005);
+INSERT INTO "pro" VALUES (40, '浅見真紀', 1, '1985-08-30', '埼玉県', '最高位戦日本プロ麻雀協会', 2010);
+INSERT INTO "pro" VALUES (41, '渡辺太', 1, '1988-07-25', '埼玉県', '最高位戦日本プロ麻雀協会', 2023);
+INSERT INTO "pro" VALUES (42, '猿川真寿', 9, '1979-04-18', '静岡県', '日本プロ麻雀連盟', 2001);
+INSERT INTO "pro" VALUES (43, '菅原千瑛', 9, '1991-12-02', '埼玉県', '日本プロ麻雀連盟', 2021);
+INSERT INTO "pro" VALUES (44, '鈴木大介', 9, '1974-07-11', '東京都', '日本プロ麻雀連盟', 2023);
+INSERT INTO "pro" VALUES (45, '中田花奈', 9, '1994-08-06', '埼玉県', '日本プロ麻雀連盟', 2021);
 
 -- ----------------------------
 -- Table structure for season
@@ -128,6 +135,10 @@ INSERT INTO "season" VALUES (8, 3, '2020赛季决赛', 'final', 'S009');
 INSERT INTO "season" VALUES (9, 4, '2021赛季常规赛', 'regular', 'S010');
 INSERT INTO "season" VALUES (10, 4, '2021赛季半决赛', 'semi_final', 'S011');
 INSERT INTO "season" VALUES (11, 4, '2021赛季决赛', 'final', 'S012');
+INSERT INTO "season" VALUES (12, 5, '2022赛季常规赛', 'regular', 'S013');
+INSERT INTO "season" VALUES (13, 5, '2022赛季半决赛', 'semi_final', 'S014');
+INSERT INTO "season" VALUES (14, 5, '2022赛季决赛', 'final', 'S015');
+INSERT INTO "season" VALUES (15, 6, '2023赛季常规赛', 'regular', 'S016');
 
 -- ----------------------------
 -- Table structure for season_pro
@@ -250,6 +261,8 @@ INSERT INTO "season_year" VALUES (1, '2018_season');
 INSERT INTO "season_year" VALUES (2, '2019_season');
 INSERT INTO "season_year" VALUES (3, '2020_season');
 INSERT INTO "season_year" VALUES (4, '2021_season');
+INSERT INTO "season_year" VALUES (5, '2022_season');
+INSERT INTO "season_year" VALUES (6, '2023_season');
 
 -- ----------------------------
 -- Table structure for sqlite_sequence
@@ -263,7 +276,7 @@ CREATE TABLE "sqlite_sequence" (
 -- ----------------------------
 -- Records of sqlite_sequence
 -- ----------------------------
-INSERT INTO "sqlite_sequence" VALUES ('season_year', 4);
+INSERT INTO "sqlite_sequence" VALUES ('season_year', 6);
 
 -- ----------------------------
 -- Table structure for team
@@ -287,6 +300,7 @@ INSERT INTO "team" VALUES (5, 'フェニックス', 'T005');
 INSERT INTO "team" VALUES (6, '雷電', 'T006');
 INSERT INTO "team" VALUES (7, 'Pirates', 'T007');
 INSERT INTO "team" VALUES (8, 'サクラナイツ', 'T008');
+INSERT INTO "team" VALUES (9, 'BEAST', 'T010');
 
 -- ----------------------------
 -- Indexes structure for table pro
@@ -311,7 +325,7 @@ ON "season" (
 -- ----------------------------
 -- Auto increment value for season_year
 -- ----------------------------
-UPDATE "sqlite_sequence" SET seq = 4 WHERE name = 'season_year';
+UPDATE "sqlite_sequence" SET seq = 6 WHERE name = 'season_year';
 
 -- ----------------------------
 -- Indexes structure for table season_year
